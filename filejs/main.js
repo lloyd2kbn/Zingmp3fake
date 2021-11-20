@@ -98,7 +98,7 @@ const app={
             _this=this;
       var htmls= this.songs.map(function(song,index){
             return `
-            <div class="box-musicplay ${index==_this.currentIndex? 'box-musicplay--active' : 'aaa'}">
+            <div class="box-musicplay ${index==_this.currentIndex? 'box-musicplay--active' : ''}" data-index="${index}">
                 <div class="info-musicplay">
                   <div class="infor-detail-music">
                      <img src="${song.image}" alt="" class="image-music">
@@ -186,8 +186,17 @@ const app={
                 repeatBtn.classList.toggle("active",_this.isRepeat);   
             }
         //Lang nghe hanh vi click vao playlist
-        playlist.onclick=function(){
-
+        playlist.onclick=function(e){
+            const songNode=e.target.closest(".box-musicplay:not(.box-musicplay--active)")
+            // xu li khi click vao song
+                    if(songNode){
+                        _this.currentIndex=songNode.getAttribute("data-index");
+                        _this.loadCurrentSong();
+                        songNode.classList.add("box-musicplay--active");
+                        audio.play();
+                        _this.render();
+                    }
+  
         } 
 
 
