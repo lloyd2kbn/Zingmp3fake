@@ -149,7 +149,7 @@ const app={
             }
             // khi song bi huy
             audio.onpause=function(){
-                this.isPlaying=false;
+                _this.isPlaying=false;
                 footerCenter.classList.remove("playing");
                 cdThumbAnimate.pause()
             }  
