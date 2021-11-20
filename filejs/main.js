@@ -97,10 +97,10 @@ const app={
     },
     // Render Giao diện
     render(){
-            _this=this;
+        const  __this=this;
       var htmls= this.songs.map(function(song,index){
             return `
-            <div class="box-musicplay ${index==_this.currentIndex? 'box-musicplay--active' : ''}" data-index="${index}">
+            <div class="box-musicplay ${index==__this.currentIndex? 'box-musicplay--active' : ''}" data-index="${index}">
                 <div class="info-musicplay">
                   <div class="infor-detail-music">
                      <img src="${song.image}" alt="" class="image-music">
@@ -138,20 +138,21 @@ const app={
                 audio.pause();
                }else{
                 audio.play();
-               }
-            //    khi song dc play
-            audio.onplay=function(){
+                
+               }      
+        }
+             //    khi song dc play
+             audio.onplay=function(){
                 _this.isPlaying=true;
                 footerCenter.classList.add("playing");
                 cdThumbAnimate.play();
             }
             // khi song bi huy
             audio.onpause=function(){
-                _this.isPlaying=false;
+                this.isPlaying=false;
                 footerCenter.classList.remove("playing");
                 cdThumbAnimate.pause()
-            }        
-        }
+            }  
            // ontime update (khi tiến độ bài hát thay đổi)
            audio.ontimeupdate=function(){    
               if(audio.duration){
@@ -169,6 +170,7 @@ const app={
            }
         //    xu li khi next bai
             next.onclick=function(){
+                
                 _this.nextSong();
                 audio.play();
                 _this.render();
@@ -194,9 +196,8 @@ const app={
             const songNode=e.target.closest(".box-musicplay:not(.box-musicplay--active)")
             // xu li khi click vao song
                     if(songNode){
-                        _this.currentIndex=songNode.getAttribute("data-index");
+                        _this.currentIndex=songNode.dataset.index;
                         _this.loadCurrentSong();
-                        songNode.classList.add("box-musicplay--active");
                         audio.play();
                         _this.render();
                     }
@@ -228,6 +229,7 @@ const app={
         // current image
         currentImage.src=this.currentSong.image;
         // duration
+        
     
         
         
@@ -244,6 +246,7 @@ const app={
     },
     // thực hiện bài hát kế tiếp
     nextSong(){
+       
         if(this.isRepeat){
             // repeatsong
             this.loadCurrentSong();
