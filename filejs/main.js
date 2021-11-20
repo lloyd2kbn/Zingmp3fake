@@ -280,7 +280,7 @@ const app={
     formatSecond(second){
         const minutes=Math.floor(second/60);
         const seconds=Math.floor(second%60);
-        return "00"+":"+"0"+minutes+":"+"0"+seconds;
+        return "00"+":"+"0"+minutes+":"+seconds;
     },
     start(){
         // định nghĩa ra các thuộc tính
