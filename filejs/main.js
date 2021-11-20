@@ -15,6 +15,7 @@ const randomBtn=$(".btn-random-song");
 const repeatBtn=$(".btn-repeat-song");
 const progressVolume=$("#volumn");
 const duration=$(".duration-time");
+const timeup=$(".current-time");
 // list bài hát
 const app={
     // Lấy bài hát đầu tiên
@@ -157,7 +158,10 @@ const app={
            audio.ontimeupdate=function(){    
               if(audio.duration){
                 const progressPercent=Math.floor(audio.currentTime/audio.duration*100);
-                progress.value=progressPercent;   
+                progress.value=progressPercent;  
+                var timene=_this.formatSecond(Math.floor(audio.currentTime))
+                timeup.innerHTML=timene;
+               
                
               }        
            }
@@ -272,6 +276,11 @@ const app={
             }while(this.currentIndex===newIndex);
           this.currentIndex=newIndex;
           this.loadCurrentSong();
+    },
+    formatSecond(second){
+        const minutes=Math.floor(second/60);
+        const seconds=Math.floor(second%60);
+        return minutes+":"+seconds;
     },
     start(){
         // định nghĩa ra các thuộc tính
