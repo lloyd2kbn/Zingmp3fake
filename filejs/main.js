@@ -13,6 +13,8 @@ const prev=$(".btn-prev-song");
 const next=$(".btn-next-song");
 const randomBtn=$(".btn-random-song");
 const repeatBtn=$(".btn-repeat-song");
+const progressVolume=$("#volumn");
+const duration=$(".duration-time");
 // list bài hát
 const app={
     // Lấy bài hát đầu tiên
@@ -151,17 +153,19 @@ const app={
             }        
         }
            // ontime update (khi tiến độ bài hát thay đổi)
-           audio.ontimeupdate=function(){
+           audio.ontimeupdate=function(){    
               if(audio.duration){
                 const progressPercent=Math.floor(audio.currentTime/audio.duration*100);
                 progress.value=progressPercent;   
-              }          
+               
+              }        
            }
 
            //xu li khi tua song
            progress.onchange=function(){
                const seekTime=(audio.duration*progress.value/100);
                audio.currentTime=seekTime;
+              
            }
         //    xu li khi next bai
             next.onclick=function(){
@@ -198,7 +202,20 @@ const app={
                     }
   
         } 
-
+        // xu li volumne
+        progressVolume.onchange=function(){
+            var currentVolumne=progressVolume.value*1/100;
+            audio.volume=currentVolumne;
+            
+        }
+    //    xu li time duration
+    audio.onloadedmetadata=function(){
+        var date = new Date(null);
+        var second=Math.floor(audio.duration);
+        date.setSeconds(second); 
+        var result = date.toISOString().substr(11, 8);
+        duration.innerHTML=result;
+    }
 
          
     },
@@ -210,6 +227,9 @@ const app={
         audio.src=this.currentSong.path;
         // current image
         currentImage.src=this.currentSong.image;
+        // duration
+    
+        
         
         
     },
